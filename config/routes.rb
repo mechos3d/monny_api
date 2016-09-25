@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  root 'welcome#index'
+  resources :syncs, only: [:index, :create]
 
-  get '/topics/:id', to: 'welcome#show'
-  post '/topics', to: 'welcome#create'
-
+  # post '/syncs', to: 'syncs#create' # TODO make a resoursefull route
 end
