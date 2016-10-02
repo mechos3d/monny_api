@@ -18,6 +18,6 @@ class SyncsController < ApplicationController
 
   # TODO: add plus-or-minus param, also add to migration
   def sync_params
-    params.require(:sync).permit(records: [:time, :category, :amount, :text, :author_id])
+    params.require(:sync).permit(records: [:time, :category, :amount, :text, :author])
   end
 end
