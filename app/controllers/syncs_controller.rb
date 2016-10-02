@@ -11,11 +11,12 @@ class SyncsController < ApplicationController
       Record.create(record_params)
     end
     # TODO: make it return errors (especially after adding validations
-    head :ok
+    render json: { created: @records.size }
   end
 
   private
 
+  # TODO: add plus-or-minus param, also add to migration
   def sync_params
     params.require(:sync).permit(records: [:time, :category, :amount, :text, :author_id])
   end
