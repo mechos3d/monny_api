@@ -10,7 +10,7 @@ class SyncsController < ApplicationController
     @records = sync_params[:records].map do |record_params|
       Record.create(record_params)
     end
-    # TODO: make it return errors (especially after adding validations
+    # TODO: make it return current total_sum
     render json: { created: @records.size }
   end
 
@@ -18,6 +18,6 @@ class SyncsController < ApplicationController
 
   # TODO: add plus-or-minus param, also add to migration
   def sync_params
-    params.require(:sync).permit(records: [:time, :category, :amount, :text, :author])
+    params.require(:sync).permit(records: [:time, :category, :sign, :amount, :text, :author])
   end
 end
