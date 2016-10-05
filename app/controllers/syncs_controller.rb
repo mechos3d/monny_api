@@ -11,7 +11,7 @@ class SyncsController < ApplicationController
       Record.create(record_params)
     end
     # TODO: make it return current total_sum
-    render json: { created: @records.size }
+    render json: { created: @records.size, updated_sum: Record.current_sum }
   end
 
   private
