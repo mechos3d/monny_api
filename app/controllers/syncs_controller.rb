@@ -6,17 +6,22 @@ class SyncsController < ApplicationController
   end
 
   def create
-    # TODO: make it in transaction
-    @records = sync_params[:records].map do |record_params|
-      Record.create(record_params)
-    end
-    # TODO: make it return current total_sum
+    @records = sync_params[:records].map do |attributes|
+      Record.create(attributes) unless duplicates.include?(attributes[:time])
+    end.compact
     render json: { created: @records.size, updated_sum: Record.current_sum }
   end
 
   private
 
-  # TODO: add plus-or-minus param, also add to migration
+  def duplicates
+    @duplicates ||= Record.where(time: time_params).pluck(:time)
+  end
+
+  def time_params
+    sync_params[:records].map { |el| el[:time] }
+  end
+
   def sync_params
     params.require(:sync).permit(records: [:time, :category, :sign, :amount, :text, :author])
   end
