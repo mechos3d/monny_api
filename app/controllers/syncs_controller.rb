@@ -6,6 +6,7 @@ class SyncsController < ApplicationController
   end
 
   def create
+    # TODO: add active-record validation for time uniqueness
     @records = sync_params[:records].map do |attributes|
       Record.create(attributes) unless duplicates.include?(attributes[:time])
     end.compact
