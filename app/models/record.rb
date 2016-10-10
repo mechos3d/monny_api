@@ -1,4 +1,6 @@
 class Record < ApplicationRecord
+  validates :time, uniqueness: true
+
   def self.total_sum
     current_sum
   end
