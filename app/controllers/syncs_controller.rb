@@ -1,4 +1,5 @@
 class SyncsController < ApplicationController
+  # TODO: don't create records with 0 amount
 
   # TODO: make number with params
   def index # currently only for testing-debugging
