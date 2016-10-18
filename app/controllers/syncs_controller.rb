@@ -3,7 +3,7 @@ class SyncsController < ApplicationController
 
   # TODO: make number with params
   def index # currently only for testing-debugging
-    @records = Record.all.limit(50)
+    @records = Record.order(time: :desc).limit(50)
     render json: @records.to_json
   end
 
