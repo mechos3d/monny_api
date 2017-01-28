@@ -1,9 +1,10 @@
 class SyncsController < ApplicationController
+  DEFAULT_LIMIT = 50
   # TODO: don't create records with 0 amount
 
   # TODO: make number with params
   def index # currently only for testing-debugging
-    @records = Record.order(time: :desc).limit(50)
+    @records = Record.order(time: :desc).limit(limit)
     render json: @records.to_json
   end
 
@@ -16,6 +17,16 @@ class SyncsController < ApplicationController
   end
 
   private
+
+  # TODO: REFACTOR: move to a query object (like in Bebop)
+  def limit
+    if params[:nolimit] == 'true'
+      nil
+    else
+      lim = params[:limit].to_i
+      lim.positive? && lim < DEFAULT_LIMIT ? lim : DEFAULT_LIMIT
+    end
+  end
 
   def sync_params
     params.require(:sync).permit(records: [:time, :category, :sign, :amount, :text, :author])
