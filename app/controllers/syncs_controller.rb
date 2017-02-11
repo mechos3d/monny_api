@@ -1,9 +1,7 @@
 class SyncsController < ApplicationController
   DEFAULT_LIMIT = 50
-  # TODO: don't create records with 0 amount
 
-  # TODO: make number with params
-  def index # currently only for testing-debugging
+  def index
     @records = Record.order(time: :desc).limit(limit)
     render json: @records.to_json
   end
