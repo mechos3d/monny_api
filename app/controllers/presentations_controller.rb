@@ -1,49 +1,15 @@
 class PresentationsController < ActionController::Base
   def show
-    @data_json = data_json.as_json
+    @data_json = GoogleChartsOutput.new(filtered_relation).as_json
     render :show, layout: false
   end
 
   private
 
-  def data_json
-    categories = Record.all.pluck(:category).uniq
-    dates = Record.all.pluck(:time).uniq
-
-
-    #[
-      #['Genre', 'Fantasy & Sci Fi', 'Romance', 'Mystery/Crime', 'General',
-       #'Western', 'Literature', { role: 'annotation' } ],
-      #['01-01', 0, 1000, 0, 0, 50, 0, ''],
-      #['02-01', 160, 220, 230, 300, 160, 90, ''],
-      #['03-01', 280, 190, 290, 300, 120, 130, ''],
-      #['04-01', 0, 1000, 0, 0, 50, 0, ''],
-      #['05-01', 160, 220, 230, 300, 160, 90, ''],
-      #['06-01', 280, 190, 290, 300, 120, 130, ''],
-      #['07-01', 0, 1000, 0, 0, 50, 0, ''],
-      #['08-01', 160, 220, 230, 300, 160, 90, ''],
-      #['09-01', 280, 190, 290, 300, 120, 130, ''],
-      #['10-01', 0, 1000, 0, 0, 50, 0, ''],
-      #['11-01', 160, 220, 230, 300, 160, 90, ''],
-      #['12-01', 280, 190, 290, 300, 120, 130, ''],
-      #['13-01', 0, 1000, 0, 0, 50, 0, ''],
-      #['14-01', 160, 220, 230, 300, 160, 90, ''],
-      #['15-01', 280, 190, 290, 300, 120, 130, ''],
-      #['16-01', 0, 1000, 0, 0, 50, 0, ''],
-      #['17-01', 160, 220, 230, 300, 160, 90, ''],
-      #['18-01', 280, 190, 290, 300, 120, 130, ''],
-      #['19-01', 0, 1000, 0, 0, 50, 0, ''],
-      #['20-01', 160, 220, 230, 300, 160, 90, ''],
-      #['21-01', 280, 190, 290, 300, 120, 130, ''],
-      #['22-01', 0, 1000, 0, 0, 50, 0, ''],
-      #['23-01', 160, 220, 230, 300, 160, 90, ''],
-      #['24-01', 280, 190, 290, 300, 120, 130, ''],
-      #['25-01', 0, 1000, 0, 0, 50, 0, ''],
-      #['26-01', 160, 220, 230, 300, 160, 90, ''],
-      #['27-01', 280, 190, 290, 300, 120, 130, ''],
-      #['28-01', 0, 1000, 0, 0, 50, 0, ''],
-      #['29-01', 160, 220, 230, 300, 160, 90, ''],
-      #['30-01', 280, 190, 290, 300, 120, 130, '']
-    #]
+  # TODO: REFACTOR: move it to a query object
+  def filtered_relation
+    after_time = Time.parse(params[:filter][:date_from]) if params.dig(:filter, :date_from)
+    before_time = Time.parse(params[:filter][:date_to]) if params.dig(:filter, :date_to)
+    Record.after_time(after_time).before_time(before_time)
   end
 end

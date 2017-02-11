@@ -1,8 +1,12 @@
 class Record < ApplicationRecord
   validates :time, uniqueness: true
+  validates :category, presence: true
   validates :amount, numericality: { greater_than: 0 }
 
   before_save :truncate_date_value
+
+  scope :before_time, ->(time) { return all unless time; where("time < ?", time) }
+  scope :after_time, ->(time) { return all unless time; where("time > ?", time) }
 
   def self.total_sum
     current_sum
