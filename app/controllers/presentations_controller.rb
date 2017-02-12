@@ -1,4 +1,6 @@
 class PresentationsController < ActionController::Base
+  http_basic_authenticate_with name: ENV['MONNY_WEB_LOGIN'], password: ENV['MONNY_WEB_PASS']
+
   def show
     @data_json = GoogleChartsOutput.new(filtered_relation).as_json
     @donut_data_json = GoogleChartsDonutOutput.new(filtered_relation).as_json
