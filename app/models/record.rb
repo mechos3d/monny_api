@@ -8,6 +8,7 @@ class Record < ApplicationRecord
   scope :before_time, ->(time) { return all unless time; where("time < ?", time) }
   scope :after_time, ->(time) { return all unless time; where("time > ?", time) }
   scope :only_expenses, ->() { where(sign: '-')}
+  scope :by_sign, ->(sign) { return all unless sign; where(sign: sign)}
 
   def self.total_sum
     current_sum
