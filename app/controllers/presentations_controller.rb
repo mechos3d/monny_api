@@ -1,6 +1,7 @@
 class PresentationsController < ActionController::Base
   def show
     @data_json = GoogleChartsOutput.new(filtered_relation).as_json
+    @donut_data_json = GoogleChartsDonutOutput.new(filtered_relation).as_json
     render :show, layout: false
   end
 

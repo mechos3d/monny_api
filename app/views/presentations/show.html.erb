@@ -6,16 +6,14 @@
 
       // Load the Visualization API and the corechart package.
       google.charts.load('current', {'packages':['corechart']});
-
-      google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(drawCharts);
 
       // Callback that creates and populates a data table,
       // instantiates the chart, passes in the data and
       // draws it.
-      function drawChart() {
+      function drawCharts() {
 
-        var data_json = <%= raw @data_json.to_json %>;
-        var data = google.visualization.arrayToDataTable(data_json);
+        var data = google.visualization.arrayToDataTable(<%= raw @data_json.to_json %>);
 
         // Set chart options
         var options = {
@@ -26,16 +24,31 @@
             isStacked: true,
           };
 
-        // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         chart.draw(data, options);
 
+        var donutData = google.visualization.arrayToDataTable(<%= raw @donut_data_json.to_json %>);
+
+        var donutOptions = {
+          title: 'Total amounts spent',
+          width: 1200,
+          height: 1200,
+          pieHole: 0.4,
+        };
+
+        var donutChart = new google.visualization.PieChart(document.getElementById('donut_chart_div'));
+        donutChart.draw(donutData, donutOptions);
       }
+    </script>
+
+    <script type="text/javascript">
+
+
     </script>
   </head>
 
   <body>
-    <!--Div that will hold the pie chart-->
     <div id="chart_div"></div>
+    <div id="donut_chart_div"></div>
   </body>
 </html>
