@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -48,7 +50,24 @@
   </head>
 
   <body>
+
+    <form action='/presentation' method='GET'>
+     <div>
+      From date:
+      <input type='date' name='filter[date_from]'/>
+     </div>
+     <div>
+      To date:
+      <input type='date' name='filter[date_to]'/>
+     </div>
+     <input type='submit' />
+    </form>
+
     <div id="chart_div"></div>
+    <div id="total_expenses">
+      <h3>Total expenses on current time period:</h3>
+      <h2><%= @total_expenses %></h2>
+    </div>
     <div id="donut_chart_div"></div>
   </body>
 </html>

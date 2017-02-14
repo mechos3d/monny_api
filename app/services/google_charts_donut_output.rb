@@ -6,6 +6,10 @@ class GoogleChartsDonutOutput
     @relation = relation.only_expenses
   end
 
+  def total_expenses
+    relation.sum(:amount)
+  end
+
   def perform
     relation.group(:category).sum(:amount).to_a.unshift(['Category', 'Total amount spent'])
   end

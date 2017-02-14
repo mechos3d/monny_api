@@ -4,6 +4,7 @@ ruby '2.3.1'
 gem 'rails', '~> 5.0.0'
 gem 'pg'
 gem 'puma', '~> 3.0'
+gem 'dotenv-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
