@@ -3,7 +3,7 @@ namespace :service do
   task fill_dates: :environment do
     Record.all.each do |rec|
       if rec.amount == 0
-        puts "DESTROYING RECORD:"
+        puts 'DESTROYING RECORD:'
         p rec
         puts
         rec.destroy

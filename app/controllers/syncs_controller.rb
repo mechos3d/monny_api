@@ -27,6 +27,6 @@ class SyncsController < ApplicationController
   end
 
   def sync_params
-    params.require(:sync).permit(records: [:time, :category, :sign, :amount, :text, :author])
+    params.require(:sync).permit(records: %i[time category sign amount text author])
   end
 end

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :syncs, only: [:index, :create]
+  root to: 'home#index'
+
+  resources :syncs, only: %i[index create]
 
   resource :presentation, only: [:show]
 end

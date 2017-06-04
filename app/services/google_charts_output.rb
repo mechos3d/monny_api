@@ -12,7 +12,7 @@ class GoogleChartsOutput
     dates_hash = {}
     relation.each do |rec|
       dates_hash[rec.date] ||= {}
-      amount = (rec.sign == '+') ? rec.amount : (- rec.amount)
+      amount = rec.sign == '+' ? rec.amount : - rec.amount
       current_value = dates_hash[rec.date][rec.category]
 
       dates_hash[rec.date][rec.category] = current_value.to_i + amount

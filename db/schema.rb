@@ -10,23 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170211200400) do
-
+ActiveRecord::Schema.define(version: 20_170_211_200_400) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "records", force: :cascade do |t|
-    t.datetime "time"
-    t.string   "category"
-    t.integer  "amount"
-    t.text     "text"
-    t.string   "author"
-    t.string   "sign",     null: false
-    t.datetime "date"
+  create_table 'records', force: :cascade do |t|
+    t.datetime 'time'
+    t.string   'category'
+    t.integer  'amount'
+    t.text     'text'
+    t.string   'author'
+    t.string   'sign', null: false
+    t.datetime 'date'
   end
 
-  create_table "sums", force: :cascade do |t|
-    t.integer "amount"
+  create_table 'sums', force: :cascade do |t|
+    t.integer 'amount'
   end
-
 end
