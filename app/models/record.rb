@@ -16,6 +16,11 @@ class Record < ApplicationRecord
     current_sum
   end
 
+  def self.current_sum # NOTE: DEPRECATED
+    amounts = Record.group(:sign).sum(:amount)
+    (amounts['+'] || 0) - (amounts['-'] || 0)
+  end
+
   # NOTE: returns hash: { 'Author1': 111, 'Author2: '-222' }
   def self.current_sums
     full_hash = Record.group(:author, :sign).sum(:amount)
