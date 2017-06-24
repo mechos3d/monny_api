@@ -11,7 +11,7 @@ class SyncsController < ApplicationController
       Record.create(attributes)
     end
     render json: { created: records.find_all(&:id).count,
-                   updated_sum: Record.current_sum }
+                   updated_sums: Record.current_sums } # returns hash: { 'Author1': 111, 'Author2: '-222' }
   end
 
   private
