@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PresentationsController < ActionController::Base
   http_basic_authenticate_with name: ENV['MONNY_WEB_LOGIN'], password: ENV['MONNY_WEB_PASS']
 
@@ -18,8 +20,13 @@ class PresentationsController < ActionController::Base
   # TODO: REFACTOR: move it to a query object
   def filtered_relation
     @fitlered_relation ||= begin
-      after_time = Time.parse(params[:filter][:date_from]) if params.dig(:filter, :date_from).present?
-      before_time = Time.parse(params[:filter][:date_to]) if params.dig(:filter, :date_to).present?
+      after_time = if params.dig(:filter, :date_from).present?
+                     Time.zone.parse(params[:filter][:date_from])
+                   end
+      before_time = if params.dig(:filter, :date_to).present?
+                      Time.zone.parse(params[:filter][:date_to])
+                    end
+
       Record.after_time(after_time)
             .before_time(before_time)
             .by_sign(sign_filter)

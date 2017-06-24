@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GoogleChartsOutput
   attr_reader :relation, :categories
 
@@ -25,9 +27,7 @@ class GoogleChartsOutput
     end.unshift(categories_array)
   end
 
-  def as_json
-    perform.as_json
-  end
+  delegate :as_json, to: :perform
 
   private
 

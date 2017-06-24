@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomeController < ActionController::Base
   http_basic_authenticate_with name: ENV['MONNY_WEB_LOGIN'], password: ENV['MONNY_WEB_PASS']
 

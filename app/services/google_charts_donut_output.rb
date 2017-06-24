@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GoogleChartsDonutOutput
   attr_reader :relation, :categories
 
@@ -14,7 +16,5 @@ class GoogleChartsDonutOutput
     relation.group(:category).sum(:amount).to_a.unshift(['Category', 'Total amount spent'])
   end
 
-  def as_json
-    perform.as_json
-  end
+  delegate :as_json, to: :perform
 end

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Record < ApplicationRecord
-  validates :time, uniqueness: true
+  validates :time, uniqueness: { scope: :author }
   validates :category, presence: true
   validates :amount, numericality: { greater_than: 0 }
 
@@ -16,9 +18,9 @@ class Record < ApplicationRecord
 
   # NOTE: returns hash: { 'Author1': 111, 'Author2: '-222' }
   def self.current_sums
-    full_hash = Record.group(:author,:sign).sum(:amount)
+    full_hash = Record.group(:author, :sign).sum(:amount)
     result = {}
-    full_hash.each do |k , v|
+    full_hash.each do |k, v|
       author = k[0]
       sign = k[1]
       value = "#{sign}#{v}".to_i
