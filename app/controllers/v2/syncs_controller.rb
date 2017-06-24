@@ -5,7 +5,7 @@ class V2::SyncsController < ::SyncsController
 
   def create
     records = sync_params[:records].map do |attributes|
-      if User.ru_names.include? attributes[:category].mb_chars.downcase.to_s
+      if is_a_transfer?(attributes)
         create_transfer_records(attributes)
       else
         Record.create(attributes.merge(author: english_name(attributes[:author])))
@@ -16,6 +16,11 @@ class V2::SyncsController < ::SyncsController
   end
 
   protected
+
+  def is_a_transfer?(attrs)
+    str = attrs[:category].mb_chars.downcase.to_s
+    User.ru_names.include?(str) || User.eng_names.include?(str)
+  end
 
   def create_transfer_records(attrs)
     user_to = english_name(attrs[:category])
