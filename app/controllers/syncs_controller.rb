@@ -19,8 +19,10 @@ class SyncsController < ApplicationController
   protected
 
   def english_name(str)
-    return str.downcase if User.eng_names.include?(str.downcase)
-    User.ru_hash[str.mb_chars&.downcase&.to_s]
+    str = str.mb_chars.downcase.to_s
+
+    return str if User.eng_names.include?(str)
+    User.ru_hash[str]
   end
 
   # TODO: REFACTOR: move to a query object (like in Bebop)
