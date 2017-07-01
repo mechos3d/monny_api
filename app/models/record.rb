@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO: make :truncate_date_value callback before the validaion
 class Record < ApplicationRecord
   validates :time, uniqueness: { scope: :author }
   validates :category, presence: true
