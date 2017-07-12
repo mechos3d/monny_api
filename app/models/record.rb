@@ -6,6 +6,7 @@ class Record < ApplicationRecord
   validates :category, presence: true
   validates :amount, numericality: { greater_than: 0 }
 
+  before_validation :truncate_time_value
   before_save :truncate_date_value
 
   scope :before_time, ->(time) { return all unless time; where('time < ?', time) }
@@ -44,5 +45,9 @@ class Record < ApplicationRecord
   # (can use PG date_trunc, but just saving this data in DB makes it much easier to work with)
   def truncate_date_value
     self.date = time.change(hour: 0)
+  end
+
+  def truncate_time_value
+    self.time = time.round(0)
   end
 end
