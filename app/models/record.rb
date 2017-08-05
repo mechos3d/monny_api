@@ -2,7 +2,7 @@
 
 # TODO: make :truncate_date_value callback before the validaion
 class Record < ApplicationRecord
-  validates :time, uniqueness: { scope: :author }
+  validates :time, uniqueness: true
   validates :category, presence: true
   validates :amount, numericality: { greater_than: 0 }
 
