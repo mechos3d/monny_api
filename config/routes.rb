@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   root to: 'home#index'
 
-  resources :syncs, only: %i[index create]
+  resources :syncs, only: :index
 
   resource :presentation, only: [:show]
 

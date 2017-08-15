@@ -8,13 +8,13 @@ class SyncsController < ApplicationController
     render json: @records.to_json
   end
 
-  def create
-    records = sync_params[:records].map do |attributes|
-      Record.create(attributes.merge(author: english_name(attributes[:author])))
-    end
-    render json: { created: records.find_all(&:id).count,
-                   updated_sum: Record.current_sum }
-  end
+  # def create
+    # records = sync_params[:records].map do |attributes|
+      # Record.create(attributes.merge(author: english_name(attributes[:author])))
+    # end
+    # render json: { created: records.find_all(&:id).count,
+                   # updated_sum: Record.current_sum }
+  # end
 
   protected
 

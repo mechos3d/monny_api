@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 class V2::SyncsController < ::SyncsController
+  include Authorization
+  before_action :authorize, only: :create
+
   DEFAULT_LIMIT = 50
 
   def create
     puts 'Testing headers .....'
-    puts request.headers['DUMMY']
+    puts request.headers['Authorization']
     puts 'Testing headers END ....'
     records = sync_params[:records].map do |attributes|
       if is_a_transfer?(attributes)
