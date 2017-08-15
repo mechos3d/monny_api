@@ -15,7 +15,7 @@ class V2::SyncsController < ApplicationController
       if is_a_transfer?(attributes)
         create_transfer_records(attributes)
       else
-        Record.create(attributes.merge(author: english_name(attributes[:author])))
+        Record.create(attributes.merge(author: User.english_name(attributes[:author])))
       end
     end.flatten.compact
     render json: { created: records.find_all(&:id).count,
