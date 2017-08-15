@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
-class V2::SyncsController < ::SyncsController
+class V2::SyncsController < ApplicationController
   include Authorization
   before_action :authorize, only: :create
-
   DEFAULT_LIMIT = 50
 
+  # TODO: add authorization to index too.
+  def index
+    @records = Record.order(time: :desc).limit(limit)
+    render json: @records.to_json
+  end
+
   def create
-    puts 'Testing headers .....'
-    puts request.headers['Authorization']
-    puts 'Testing headers END ....'
     records = sync_params[:records].map do |attributes|
       if is_a_transfer?(attributes)
         create_transfer_records(attributes)
@@ -29,8 +31,8 @@ class V2::SyncsController < ::SyncsController
 
   def create_transfer_records(attrs)
     str = attrs[:category].downcase.match(/transfer_(.*)/)[1]
-    user_to = english_name(str)
-    user_from = english_name(attrs[:author])
+    user_to = User.english_name(str)
+    user_from = User.english_name(attrs[:author])
 
     from = nil
     to = nil
@@ -39,5 +41,19 @@ class V2::SyncsController < ::SyncsController
       to = Record.create(attrs.merge(sign: '+', category: 'transfer', author: user_to))
     end
     [from, to]
+  end
+
+  # TODO: REFACTOR: move to a query object (like in Bebop)
+  def limit
+    if params[:nolimit] == 'true'
+      nil
+    else
+      lim = params[:limit].to_i
+      lim.positive? && lim < DEFAULT_LIMIT ? lim : DEFAULT_LIMIT
+    end
+  end
+
+  def sync_params
+    params.require(:sync).permit(records: %i[time category sign amount text author])
   end
 end

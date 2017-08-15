@@ -17,5 +17,12 @@ class User
     def ru_hash
       { 'марина' => 'marina', 'паша' => 'pasha' }
     end
+
+    def english_name(str)
+      str = str.mb_chars.downcase.to_s
+
+      return str if eng_names.include?(str)
+      ru_hash[str]
+    end
   end
 end
