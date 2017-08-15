@@ -2,7 +2,8 @@
 
 class V2::SyncsController < ApplicationController
   include Authorization
-  before_action :authorize
+  # TODO: enable auth, when both cellphones will be ready
+  # before_action :authorize
   DEFAULT_LIMIT = 50
 
   def index
