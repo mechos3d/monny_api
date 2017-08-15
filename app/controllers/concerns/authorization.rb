@@ -10,7 +10,7 @@ module Authorization
     # NOTE: this code is from here:
     # http://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Token.html
     def authorize
-      auth_token = 'simple_testing_token' # SiteConfig.new(site_name).settings&.push&.auth_token
+      auth_token = ENV['MONNY_AUTH_TOKEN']
       authenticate_or_request_with_http_token do |token, _options|
         # Compare the tokens in a time-constant manner, to mitigate timing attacks.
         ActiveSupport::SecurityUtils.secure_compare(

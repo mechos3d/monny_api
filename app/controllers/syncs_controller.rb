@@ -3,10 +3,12 @@
 class SyncsController < ApplicationController
   DEFAULT_LIMIT = 50
 
-  def index
-    @records = Record.order(time: :desc).limit(limit)
-    render json: @records.to_json
-  end
+  # TODO: REFACTOR: this v1 controller is no longer needed. Move everything in V2/SyncsController
+
+  # def index
+    # @records = Record.order(time: :desc).limit(limit)
+    # render json: @records.to_json
+  # end
 
   # def create
     # records = sync_params[:records].map do |attributes|
