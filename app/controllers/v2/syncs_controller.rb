@@ -2,10 +2,9 @@
 
 class V2::SyncsController < ApplicationController
   include Authorization
-  before_action :authorize, only: :create
+  before_action :authorize
   DEFAULT_LIMIT = 50
 
-  # TODO: add authorization to index too.
   def index
     @records = Record.order(time: :desc).limit(limit)
     render json: @records.to_json
