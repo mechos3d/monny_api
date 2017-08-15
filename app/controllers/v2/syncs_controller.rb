@@ -18,17 +18,20 @@ class V2::SyncsController < ::SyncsController
   protected
 
   def is_a_transfer?(attrs)
-    str = attrs[:category].mb_chars.downcase.to_s
-    User.ru_names.include?(str) || User.eng_names.include?(str)
+    attrs[:category].downcase.start_with?('transfer_')
   end
 
   def create_transfer_records(attrs)
-    user_to = english_name(attrs[:category])
+    str = attrs[:category].downcase.match(/transfer_(.*)/)[1]
+    user_to = english_name(str)
     user_from = english_name(attrs[:author])
 
-    if (from = Record.create(attrs.merge(sign: '-', category: 'transfer', author: user_from)))
+    from = nil
+    to = nil
+    ActiveRecord::Base.transaction do
+      from = Record.create(attrs.merge(sign: '-', category: 'transfer', author: user_from))
       to = Record.create(attrs.merge(sign: '+', category: 'transfer', author: user_to))
-      [from, to]
     end
+    [from, to]
   end
 end
