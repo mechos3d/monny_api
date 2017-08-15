@@ -4,6 +4,9 @@ class V2::SyncsController < ::SyncsController
   DEFAULT_LIMIT = 50
 
   def create
+    puts 'Testing headers .....'
+    puts request.headers['DUMMY']
+    puts 'Testing headers END ....'
     records = sync_params[:records].map do |attributes|
       if is_a_transfer?(attributes)
         create_transfer_records(attributes)
