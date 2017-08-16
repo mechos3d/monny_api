@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class V2::SyncsController < ApplicationController
-  include Authorization
-  before_action :authorize
+class SyncsController < ApplicationController
   DEFAULT_LIMIT = 50
 
   def index
