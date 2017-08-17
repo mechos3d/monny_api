@@ -4,9 +4,10 @@ class V2::SyncsController < ApplicationController
   include Authorization
   before_action :authorize
   DEFAULT_LIMIT = 50
+  MAX_OFFSET = 1_000_000
 
   def index
-    @records = Record.order(time: :desc).limit(limit)
+    @records = Record.order(time: :desc).limit(limit).offset(offset)
     render json: @records.to_json
   end
 
@@ -50,6 +51,11 @@ class V2::SyncsController < ApplicationController
       lim = params[:limit].to_i
       lim.positive? && lim < DEFAULT_LIMIT ? lim : DEFAULT_LIMIT
     end
+  end
+
+  def offset
+    off = params[:offset].to_i
+    off.positive? && off < MAX_OFFSET ? off : 0
   end
 
   def sync_params
