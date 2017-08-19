@@ -36,9 +36,10 @@ class V2::SyncsController < ApplicationController
 
     from = nil
     to = nil
+    time_to = Time.zone.parse(attrs[:time]) + 1.second  # HACK: until unique index on time is changed this is needed.
     ActiveRecord::Base.transaction do
       from = Record.create(attrs.merge(sign: '-', category: 'transfer', author: user_from))
-      to = Record.create(attrs.merge(sign: '+', category: 'transfer', author: user_to))
+      to = Record.create(attrs.merge(sign: '+', category: 'transfer', author: user_to, time: time_to))
     end
     [from, to]
   end

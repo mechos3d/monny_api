@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# TODO:validate time uniqueness in scope of user
+# TODO: change unique index on time to be combined time-user
+
 # TODO: make :truncate_date_value callback before the validaion
 class Record < ApplicationRecord
   validates :time, uniqueness: true
