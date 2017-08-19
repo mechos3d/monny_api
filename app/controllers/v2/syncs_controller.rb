@@ -26,11 +26,11 @@ class V2::SyncsController < ApplicationController
   protected
 
   def is_a_transfer?(attrs)
-    attrs[:category].downcase.start_with?('transfer_')
+    attrs[:category].downcase =~ /transfer[_-].+/
   end
 
   def create_transfer_records(attrs)
-    str = attrs[:category].downcase.match(/transfer_(.*)/)[1]
+    str = attrs[:category].downcase.match(/transfer[_-](.*)/)[1]
     user_to = User.english_name(str)
     user_from = User.english_name(attrs[:author])
 
