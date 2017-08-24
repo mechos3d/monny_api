@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   resource :presentation, only: [:show]
   namespace 'v2' do
     resources :syncs, only: %i[index create]
+    resources :st_records, only: %i[index show create]
   end
 end

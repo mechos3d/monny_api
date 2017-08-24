@@ -26,14 +26,14 @@ ActiveRecord::Schema.define(version: 20170818065730) do
     t.index ["time"], name: "index_records_on_time", unique: true, using: :btree
   end
 
-  create_table "storage_records", force: :cascade do |t|
+  create_table "st_records", force: :cascade do |t|
     t.string   "category"
     t.integer  "amount"
     t.string   "sign"
     t.string   "unit"
     t.string   "status"
     t.text     "text"
-    t.datetime "updated_at"
+    t.datetime "time"
   end
 
   create_table "sums", force: :cascade do |t|

@@ -10,6 +10,7 @@ module Authorization
     # NOTE: this code is from here:
     # http://api.rubyonrails.org/classes/ActionController/HttpAuthentication/Token.html
     def authorize
+      return true if Rails.env.development?
       auth_token = ENV['MONNY_AUTH_TOKEN']
       authenticate_or_request_with_http_token do |token, _options|
         # Compare the tokens in a time-constant manner, to mitigate timing attacks.
