@@ -54,11 +54,11 @@
     <form action='/presentation' method='GET'>
      <div>
       From date:
-      <input type='date' name='filter[date_from]'/>
+      <input type='date' name='filter[date_from]' value='<%= params.dig(:filter, :date_from) %>'/>
      </div>
      <div>
       To date:
-      <input type='date' name='filter[date_to]'/>
+      <input type='date' name='filter[date_to]' value='<%= params.dig(:filter, :date_to) %>' />
      </div>
      <div>
       Only expenses:
