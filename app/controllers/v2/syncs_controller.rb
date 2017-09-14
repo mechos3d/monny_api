@@ -6,8 +6,10 @@ class V2::SyncsController < ApplicationController
   DEFAULT_LIMIT = 50
   MAX_OFFSET = 1_000_000
 
+  PERMITTED_FILTERS = %i(time_gt time_lt category amount_gt amount_lt text author).freeze
+
   def index
-    @records = Record.order(time: :desc).limit(limit).offset(offset)
+    @records = filtered_model.order(time: :desc).limit(limit).offset(offset)
     render json: @records.to_json
   end
 
@@ -24,6 +26,18 @@ class V2::SyncsController < ApplicationController
   end
 
   protected
+
+  def filtered_model
+    filters.inject(model) { |result, (k, v)| result.public_send("by_#{k}", v) }
+  end
+
+  def model
+    Record.order(time: :desc)
+  end
+
+  def filters
+    @filters ||= params[:filter].select { |key, _| PERMITTED_FILTERS.include?(key.to_sym) }
+  end
 
   def is_a_transfer?(attrs)
     attrs[:category].downcase =~ /transfer[_-].+/

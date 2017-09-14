@@ -22,7 +22,7 @@ class User
       str = str.mb_chars.downcase.to_s
 
       return str if eng_names.include?(str)
-      ru_hash[str]
+      ru_hash[str] || str
     end
   end
 end

@@ -17,6 +17,49 @@ class Record < ApplicationRecord
   scope :only_expenses, ->() { where(sign: '-') }
   scope :by_sign, ->(sign) { return all unless sign; where(sign: sign) }
 
+  # PERMITTED_FILTERS = %w(time_gt, time_lt, category, amount_gt, amount_lt, text (ILIKE), author)
+  # methods from GET-params
+
+  class << self
+    def by_time_gt(arg)
+      # TODO: parse the time here
+      return all unless arg
+      where('time > ?', arg)
+    end
+
+    def by_time_lt(arg)
+      # TODO: parse the time here
+      return all unless arg
+      where('time < ?', arg)
+    end
+
+    def by_category(arg)
+      return all unless arg
+      where(category: arg)
+    end
+
+    def by_amount_gt(arg)
+      return all unless arg
+      where('amount > ?', arg)
+    end
+
+    def by_amount_lt(arg)
+      return all unless arg
+      where('amount < ?', arg)
+    end
+
+    def by_text(arg)
+      return all unless arg
+      where('text ILIKE ?', arg)
+    end
+
+    def by_author(arg)
+      return all unless arg
+      where(author: arg)
+    end
+  end
+  # methods from GET-params END
+
   def self.total_sum
     current_sum
   end
