@@ -36,6 +36,7 @@ class V2::SyncsController < ApplicationController
   end
 
   def filters
+    return {} unless params[:filter].present?
     @filters ||= params[:filter].select { |key, _| PERMITTED_FILTERS.include?(key.to_sym) }
   end
 
