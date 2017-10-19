@@ -10,6 +10,7 @@ class Record < ApplicationRecord
   validates :amount, numericality: { greater_than: 0 }
 
   before_validation :truncate_time_value
+  before_validation :nullify_category
   before_save :truncate_date_value
 
   scope :before_time, ->(time) { return all unless time; where('time < ?', time) }
@@ -95,5 +96,9 @@ class Record < ApplicationRecord
 
   def truncate_time_value
     self.time = time.round(0)
+  end
+
+  def nullify_category
+    self.category = nil if category == 'null'
   end
 end
