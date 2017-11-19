@@ -18,7 +18,7 @@ class V2::SyncsController < ApplicationController
       if is_a_transfer?(attributes)
         create_transfer_records(attributes)
       else
-        Record.create(attributes.merge(author: User.english_name(attributes[:author])))
+        Record.create(attributes.merge(author: attributes[:author]))
       end
     end.flatten.compact
     render json: { created: records.find_all(&:id).count,
@@ -41,16 +41,17 @@ class V2::SyncsController < ApplicationController
   end
 
   def is_a_transfer?(attrs)
-    attrs[:category].downcase =~ /transfer[_-].+/
+    attrs[:category].downcase =~ /\Atransfer__.+/
   end
 
   def create_transfer_records(attrs)
-    str = attrs[:category].downcase.match(/transfer[_-](.*)/)[1]
-    user_to = User.english_name(str)
-    user_from = User.english_name(attrs[:author])
+    match = /transfer__(.+)__(.+)\z/.match(attrs[:category])
 
-    from = nil
-    to = nil
+    raise StandardError unless match.present?
+    user_from, user_to = match[1], match[2]
+    raise StandardError unless user_from.present? && user_to.present?
+
+    from, to = nil, nil
     time_to = Time.zone.parse(attrs[:time]) + 1.second  # HACK: until unique index on time is changed this is needed.
     ActiveRecord::Base.transaction do
       from = Record.create(attrs.merge(sign: '-', category: 'transfer', author: user_from))

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170818065730) do
+ActiveRecord::Schema.define(version: 20170817062427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,16 +24,6 @@ ActiveRecord::Schema.define(version: 20170818065730) do
     t.string   "sign",     null: false
     t.datetime "date"
     t.index ["time"], name: "index_records_on_time", unique: true, using: :btree
-  end
-
-  create_table "st_records", force: :cascade do |t|
-    t.string   "category"
-    t.integer  "amount"
-    t.string   "sign"
-    t.string   "unit"
-    t.string   "status"
-    t.text     "text"
-    t.datetime "time"
   end
 
   create_table "sums", force: :cascade do |t|
