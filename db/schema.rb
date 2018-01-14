@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170817062427) do
+ActiveRecord::Schema.define(version: 20180114202205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20170817062427) do
     t.string   "author"
     t.string   "sign",     null: false
     t.datetime "date"
+    t.boolean  "secret"
     t.index ["time"], name: "index_records_on_time", unique: true, using: :btree
   end
 

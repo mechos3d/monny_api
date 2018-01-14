@@ -9,7 +9,7 @@ class V2::SyncsController < ApplicationController
   PERMITTED_FILTERS = %i(time_gt time_lt category amount_gt amount_lt text author).freeze
 
   def index
-    @records = filtered_model.order(time: :desc).limit(limit).offset(offset)
+    @records = filtered_model.non_secret.order(time: :desc).limit(limit).offset(offset)
     render json: @records.to_json
   end
 
@@ -76,6 +76,6 @@ class V2::SyncsController < ApplicationController
   end
 
   def sync_params
-    params.require(:sync).permit(records: %i[time category sign amount text author])
+    params.require(:sync).permit(records: %i[time category sign amount text author secret])
   end
 end

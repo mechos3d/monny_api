@@ -17,6 +17,7 @@ class Record < ApplicationRecord
   scope :after_time, ->(time) { return all unless time; where('time > ?', time) }
   scope :only_expenses, ->() { where(sign: '-') }
   scope :by_sign, ->(sign) { return all unless sign; where(sign: sign) }
+  scope :non_secret, ->() { where(secret: [nil, false]) }
 
   # PERMITTED_FILTERS = %w(time_gt, time_lt, category, amount_gt, amount_lt, text (ILIKE), author)
   # methods from GET-params
