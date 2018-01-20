@@ -9,7 +9,7 @@ class V2::SyncsController < ApplicationController
   PERMITTED_FILTERS = %i(time_gt time_lt category amount_gt amount_lt text author).freeze
 
   def index
-    @records = filtered_model.non_secret.limit(limit).offset(offset)
+    @records = apply_filters
     render json: @records.to_json
   end
 
@@ -26,6 +26,16 @@ class V2::SyncsController < ApplicationController
   end
 
   protected
+
+  # TODO: REFACTOR: move to a query object (like in Bebop)
+  # TODO: later, when there will be more Record's there will be a need to send back a gzip'ed json
+  def apply_filters
+    if params[:backup]
+      model.all
+    else
+      filtered_model.non_secret.limit(limit).offset(offset)
+    end
+  end
 
   def filtered_model
     filters.inject(model) { |result, (k, v)| result.public_send("by_#{k}", v) }
@@ -60,14 +70,9 @@ class V2::SyncsController < ApplicationController
     [from, to]
   end
 
-  # TODO: REFACTOR: move to a query object (like in Bebop)
   def limit
-    if params[:nolimit] == 'true'
-      nil
-    else
-      lim = params[:limit].to_i
-      lim.positive? && lim < DEFAULT_LIMIT ? lim : DEFAULT_LIMIT
-    end
+    lim = params[:limit].to_i
+    lim.positive? && lim < DEFAULT_LIMIT ? lim : DEFAULT_LIMIT
   end
 
   def offset
