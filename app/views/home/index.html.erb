@@ -5,8 +5,13 @@
   </head>
 
   <body>
-    <div>GET /syncs/</div>
-    <div>POST /syncs/</div>
+    <div>GET /v2/syncs/</div>
+    <div>---> parameters: backup=1</div>
+    <div>---> parameters: filter=(time_gt time_lt category amount_gt amount_lt text author) (for example: filter[category]=dummy)</div>
+    <div>---> parameters: limit=1</div>
+    <div>---> parameters: offset=1</div>
+
+    <div>POST /v2/syncs/</div>
 
     <div>GET /presentation/</div>
     <div>---> parameters: filter[date_from]</div>
