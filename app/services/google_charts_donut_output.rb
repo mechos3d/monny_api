@@ -1,11 +1,11 @@
 # frozen_string_literal: true
-
 class GoogleChartsDonutOutput
   attr_reader :relation, :categories
+  IGNORED_CATEGORIES = ['transfer'].freeze
 
-  # TODO: REFACTOR - not a universal service, only_expenses must be an option or something..
+  # TODO: REFACTOR - not a universal service, only_expenses must be set through an argument
   def initialize(relation)
-    @relation = relation.only_expenses
+    @relation = relation.only_expenses.where.not(category: IGNORED_CATEGORIES)
   end
 
   def total_expenses
