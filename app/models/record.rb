@@ -12,6 +12,7 @@ class Record < ApplicationRecord
   before_validation :truncate_time_value
   before_validation :nullify_category
   before_save :truncate_date_value
+  before_save :sanitize_category
 
   scope :before_time, ->(time) { return all unless time; where('time < ?', time) }
   scope :after_time, ->(time) { return all unless time; where('time > ?', time) }
@@ -88,6 +89,10 @@ class Record < ApplicationRecord
   end
 
   private
+
+  def sanitize_category
+    self.category = category.strip if category
+  end
 
   # NOTE: date field is needed to sort records by date
   # (can use PG date_trunc, but just saving this data in DB makes it much easier to work with)
