@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe '/diary/syncs', type: :request do
   let(:route) { '/diary/syncs' }
   let(:headers) do
-    { Authorization: 'Bearer test_auth_token' }
+    { Authorization: 'Bearer test_auth_token',
+      'Content-Type': 'application/json' }
   end
 
   describe 'POST' do
@@ -17,7 +18,7 @@ RSpec.describe '/diary/syncs', type: :request do
     end
 
     let(:request_params) do
-      { sync: { records: [ record_params ] } }
+      { sync: { records: [ record_params ] } }.to_json
     end
 
     context 'simple happy path' do
