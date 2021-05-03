@@ -10,4 +10,8 @@ Rails.application.routes.draw do
     # curl --header 'Authorization: Bearer <token>' 'https://<host>/v2/syncs?backup=true'
     resources :syncs, only: %i[index create]
   end
+
+  namespace 'diary' do
+    resources :syncs, only: :create
+  end
 end

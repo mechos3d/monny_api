@@ -24,6 +24,7 @@ gem 'rails', '~> 5.0.0'
 
 group :development, :test do
   gem 'pry-rails'
+  gem 'rspec-rails'
 end
 
 group :development do

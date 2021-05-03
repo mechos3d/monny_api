@@ -8,6 +8,7 @@ class V2::SyncsController < ApplicationController
 
   PERMITTED_FILTERS = %i(time_gt time_lt category amount_gt amount_lt text author).freeze
 
+  # TODO: move this action to a separate 'Records' controller.
   def index
     @records = apply_filters
     render json: @records.to_json
@@ -27,8 +28,7 @@ class V2::SyncsController < ApplicationController
 
   protected
 
-  # TODO: REFACTOR: move to a query object (like in Bebop)
-  # TODO: later, when there will be more Record's there will be a need to send back a gzip'ed json
+  # TODO: REFACTOR: move to a query object
   def apply_filters
     if params[:backup]
       model.all

@@ -1,14 +1,3 @@
-1 api gets array of hashes :
-   { sync: { records: [{ time: , category: , amount:, text:, author_id: }]}}
+1 DIARY:
+  add a unique index on 'uid' field and do not create duplicates on insertion (silently skip them without error)
 
-'{"sync": {"records":[
-{ "time":"2016-09-25T19:01:40Z", "category":"dinner", "amount":"500", "text": "", "author_id":"999"
-},
-{ "time":"2016-09-25T20:01:40Z", "category":"transport", "amount":"250", "text": "bla-bla-bla", "author_id":"999"
-},
-{ "time":"2016-09-25T21:01:40Z", "category":"groceries", "amount":"180", "text": "", "author_id":"999"
-}
-]}}'
-
-
-'{"sync":{"records":[{"time":"2016-09-25T19:01:40Z","category":"dinner","amount":"500","text":"","author_id":"999"},{"time":"2016-09-25T20:01:40Z","category":"transport","amount":"250","text":"bla-bla-bla","author_id":"999"},{"time":"2016-09-25T21:01:40Z","category":"groceries","amount":"180","text":"","author_id":"999" }]}}'
