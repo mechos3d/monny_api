@@ -5,7 +5,7 @@ ruby '2.7.0'
 
 gem 'dotenv-rails'
 gem 'pg'
-gem 'puma', '~> 3.0'
+gem 'puma', '~> 4.3'
 gem 'rails', '~> 5.0.0'
 
 
